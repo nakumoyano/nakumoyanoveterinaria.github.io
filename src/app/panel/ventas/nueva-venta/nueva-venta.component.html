@@ -1,0 +1,192 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh] flex flex-col gap-4">
+    <!-- FORMULARIO -->
+    <form class="my-2" [formGroup]="frmAddEditVenta">
+      <div
+        class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white"
+      >
+        <div
+          class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+        >
+          <h3 class="text-white">Nueva venta</h3>
+        </div>
+        <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+          <legend class="text-lg font-bold px-2 uppercase">
+            Datos de la venta
+          </legend>
+
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- PRODUCTO -->
+            <div class="flex flex-col">
+              <label
+                for="idProducto"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Producto</label
+              >
+              <p-dropdown
+                [options]="productos"
+                [(ngModel)]="selectedProducto"
+                optionLabel="nombre"
+                [filter]="true"
+                filterBy="nombre"
+                appendTo="body"
+                [showClear]="true"
+                placeholder="Seleccionar producto"
+                formControlName="idProducto"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlProductos.touched &&
+                  controlProductos.hasError('required')
+                "
+                [ngClass]="
+                  controlProductos.touched && controlProductos.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-prod pTemplate="item">
+                  <div class="prod-item">
+                    <div>{{ prod.nombre }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlProductos.touched && controlProductos.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+            <!-- PRODUCTO NO REGISTRADO -->
+            <div class="">
+              <label
+                for="importe"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Producto no registrado</label
+              >
+              <input
+                type="text"
+                id="importe"
+                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                placeholder="Ingrese el producto"
+              />
+            </div>
+            <!-- CANTIDAD -->
+            <div class="">
+              <label
+                for="importe"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Cantidad</label
+              >
+              <input
+                type="number"
+                id="importe"
+                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                placeholder="Ingrese la cantidad"
+              />
+            </div>
+            <!-- CONCEPTO -->
+            <div class="">
+              <label
+                for="importe"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Concepto</label
+              >
+              <input
+                type="number"
+                id="importe"
+                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                placeholder="Ingrese el concepto"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <i class="fa-solid fa-cart-plus mr-2"></i>Agregar al listado
+          </button>
+        </fieldset>
+      </div>
+      <!-- CARRITO -->
+      <div
+        class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white"
+      >
+        <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+          <legend class="text-lg font-bold px-2 uppercase">listado</legend>
+          <!-- DROPDOWN TIPO DE PAGO -->
+          <div class="grid grid-cols-2">
+            <div class="flex flex-col">
+              <label
+                for="idModoPago"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Modo de pago</label
+              >
+              <p-dropdown
+                [options]="modoPagos"
+                [(ngModel)]="selectedModoPago"
+                optionLabel="modoPago"
+                appendTo="body"
+                [showClear]="true"
+                placeholder="Seleccionar modo de pago"
+                formControlName="idModoPago"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlModoPago.touched &&
+                  controlModoPago.hasError('required')
+                "
+                [ngClass]="
+                  controlModoPago.touched && controlModoPago.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-modoPago pTemplate="item">
+                  <div class="modoPago-item">
+                    <div>{{ modoPago.modoPago }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlModoPago.touched && controlModoPago.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+          </div>
+          <div class="text-center">
+            <h3 class="my-10 text-slate-500">
+              Aún no se ha agregado ningún producto.
+            </h3>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

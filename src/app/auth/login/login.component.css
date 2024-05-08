@@ -1,0 +1,54 @@
+.bg-image-vertical {
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 100%;
+}
+
+@media (min-width: 1025px) {
+  .h-custom-2 {
+    height: 100%;
+  }
+}
+
+.bg {
+  background-image: url("https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-position: center;
+  background-size: cover;
+}
+
+.img {
+  width: 120px;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  width: 60%;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.img-left {
+  background-color: rgb(0, 68, 255);
+}
+
+.section {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 0px 80px 0px 80px;
+}
+
+.text {
+  color: black;
+}
+
+.i-eye {
+  color: black;
+  cursor: pointer;
+  right: 25px;
+  position: absolute;
+  padding-top: 12px;
+}

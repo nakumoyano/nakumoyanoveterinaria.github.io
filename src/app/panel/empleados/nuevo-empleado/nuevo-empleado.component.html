@@ -1,0 +1,123 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[810px] w-[810px]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white">Nuevo empleado</h3>
+      </div>
+      <h2 class="my-2">Datos del empleado</h2>
+      <hr />
+
+      <form class="my-2">
+        <div
+          class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+        >
+          <div class="">
+            <label
+              for="nombre"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Nombre</label
+            >
+            <input
+              type="text"
+              id="nombre"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              placeholder="Ingrese el nombre del cliente"
+              required
+            />
+          </div>
+          <div class="">
+            <label
+              for="stock"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Apellido</label
+            >
+            <input
+              type="text"
+              id="stock"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              placeholder="Ingrese el apellido del cliente"
+            />
+          </div>
+        </div>
+        <div
+          class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+        >
+          <div class="">
+            <label
+              for="countries"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Rol del empleado</label
+            >
+            <select
+              id="countries"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option selected>Seleccione una opción</option>
+              <option value="US">Vendedor</option>
+              <option value="CA">Encargado de compras</option>
+              <option value="FR">Encargado de depósito</option>
+            </select>
+          </div>
+          <div class="">
+            <label
+              for="tel"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Teléfono</label
+            >
+            <input
+              type="number"
+              id="tel"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              placeholder="Ingrese el teléfono del cliente"
+            />
+          </div>
+        </div>
+        <div
+          class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+        >
+          <div class="">
+            <label
+              for="dir"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Dirección</label
+            >
+            <input
+              type="text"
+              id="dir"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              placeholder="Ingrese la dirección del cliente"
+            />
+          </div>
+          <div class="">
+            <label
+              for="dni"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >N° Documento</label
+            >
+            <input
+              type="number"
+              id="dni"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              placeholder="Ingrese el dni del cliente"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Cargar empleado
+        </button>
+      </form>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

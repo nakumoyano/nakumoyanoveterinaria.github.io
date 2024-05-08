@@ -1,0 +1,16 @@
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.verde {
+    color: green;
+}
+
+.rojo {
+    color: red;
+}
+
+.amarillo {
+    color: yellow;
+}

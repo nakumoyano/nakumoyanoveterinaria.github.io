@@ -1,0 +1,203 @@
+<div class="grid grid-cols-12 gap-4 mt-16">
+  <app-sidebar></app-sidebar>
+  <div class="lg:col-span-8 sm:col-span-12" id="dashboard">
+    <div class="lg:ml-32 md:ml-56 mt-4 lg:mx-0 md:mx-0 sm:mx-2">
+      <!-- IMAGEND E ARRIBA -->
+      <div class="w-full card flexrelative mb-4 h-48">
+        <div class="flex items-center w-full justify-between h-48 p-2 content">
+          <div class="flex flex-col w-full text-white h-full z-50">
+            <div class="flex flex-col text-lg">
+              <div class="flex gap-x-2">
+                <p class="text-2xl font-bold">
+                  Bienvenido a
+                  <span class="italic"
+                    >La Veteri<span class="text-blue-500">naria</span></span
+                  >
+                </p>
+              </div>
+              <p>👋 Hola, Nahuel!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- CARDS CON DATOS NUMERICOS -->
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-4">
+        <div class="flex items-center h-24 p-2 rounded bg-white drop-shadow">
+          <div class="flex items-center gap-x-4">
+            <i
+              class="fa-solid fa-money-bill-trend-up text-[25px] p-4 rounded text-orange-600 bg-orange-100"
+            ></i>
+            <div class="flex flex-col">
+              <h3 class="text-3xl">150</h3>
+              <p class="text-sm text-[#96989b]">Ventas en el último mes</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center h-24 p-2 rounded bg-white drop-shadow">
+          <div class="flex items-center gap-x-4 w-full">
+            <i
+              class="fa-solid fa-paw text-[25px] p-4 rounded text-green-600 bg-green-100"
+            ></i>
+            <div class="flex flex-col w-full">
+              <h3 class="text-3xl">{{ obtenerTotalResultados() }}</h3>
+              <p class="text-sm text-[#96989b]">Total de mascotas</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center h-24 p-2 rounded bg-white drop-shadow">
+          <div class="flex items-center gap-x-4">
+            <i
+              class="fa-solid fa-calendar-minus text-[25px] p-4 rounded text-blue-600 bg-blue-100"
+            ></i>
+            <div class="flex flex-col">
+              <h3 class="text-3xl">{{ obtenerTotalRecordatorios() }}</h3>
+              <p class="text-sm text-[#96989b]">Recordatorios para hoy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECORDATORIOS -->
+      <fieldset
+        class="grid grid-cols-12 border border-solid border-gray-200 drop-shadow p-3 my-2 rounded bg-white"
+      >
+        <legend class="text-lg font-bold px-2 uppercase">
+          recordatorios para hoy
+        </legend>
+        <ng-container
+          *ngIf="
+            recordatorios && recordatorios.length > 0;
+            else noRecordatorios
+          "
+        >
+          <div class="table-container col-span-12">
+            <table class="w-full text-sm text-left">
+              <thead class="text-xs uppercase bg-gray-700 text-white">
+                <tr>
+                  <th scope="col" class="px-6 py-3">
+                    <i class="fa-solid fa-calendar mr-2"></i>DÍA
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    <i class="fa-solid fa-user mr-2"></i> DUEÑO
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    <i class="fa-solid fa-paw mr-2"></i>MASCOTA
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    <i class="fa-solid fa-clipboard-list mr-2"></i>DESCRIPCIÓN
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    <i class="fa-brands fa-whatsapp mr-2"></i>TELÉFONO
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  *ngFor="let r of recordatorios"
+                >
+                  <th class="px-3 py-4">{{ r.fecha | date : "dd/MM/yyyy" }}</th>
+                  <td class="px-6 py-4">
+                    {{ r.nombreCompletoPersona || r.mascota?.persona }}
+                  </td>
+                  <td class="px-6 py-4">{{ r.mascota?.nombre }}</td>
+                  <td class="px-6 py-4">{{ r.motivo }}</td>
+                  <td class="px-1 py-4 justify-center flex">
+                    <i
+                      class="fa-brands fa-whatsapp text-2xl text-green-500 cursor-pointer hover:text-green-600"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+        <ng-template #noRecordatorios>
+          <div
+            class="col-span-12 justify-center text-center text-2xl py-4 text-slate-400 flex flex-col gap-4"
+          >
+            <i class="fa-solid fa-clipboard-check text-[60px]"></i>
+            <p class="">No hay recordatorios para hoy.</p>
+          </div>
+        </ng-template>
+        <div
+          class="mt-3 col-span-12 justify-center text-center"
+          *ngIf="recordatorios.length > 2"
+        >
+          <a
+            href="/admin/recordatorios/listado-de-recordatorios-del-dia"
+            class="w-full text-blue-500 font-bold px-4 py-2 hover:bg-blue-50 rounded-lg"
+            >Ver más</a
+          >
+        </div>
+      </fieldset>
+
+      <!-- PRODUCTOS CON STOCK BAJO -->
+      <fieldset
+        class="grid grid-cols-12 border border-solid border-gray-200 drop-shadow p-3 my-4 rounded bg-white"
+      >
+        <legend class="text-lg font-bold px-2 uppercase">
+          Productos a reponer
+        </legend>
+
+        <div
+          class="table-container col-span-12"
+          *ngIf="tieneProductosAReponer()"
+        >
+          <table class="w-full text-sm text-left">
+            <thead class="text-xs uppercase bg-gray-700 text-white">
+              <tr>
+                <th scope="col" class="px-6 py-3">Nombre</th>
+                <th scope="col" class="px-6 py-3">Detalle</th>
+                <th scope="col" class="px-6 py-3">Stock</th>
+                <th scope="col" class="px-6 py-3">Precio</th>
+                <th scope="col" class="px-6 py-3">Código</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let producto of productos"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <td class="px-6 py-4">{{ producto.nombre }}</td>
+                <td class="px-6 py-4">{{ producto.descripcion }}</td>
+                <td
+                  class="px-6 py-4 font-bold"
+                  [style.color]="producto.stock | cambioDeColor"
+                >
+                  {{ producto.stock }}
+                </td>
+                <td class="px-6 py-4">{{ producto.precio }}</td>
+                <td class="px-6 py-4">{{ producto.codigo }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="col-span-12 justify-center text-center text-2xl py-4 text-slate-400 flex flex-col gap-4"
+          *ngIf="!tieneProductosAReponer()"
+        >
+          <i class="fa-solid fa-clipboard-check text-[60px]"></i>
+          <p class="">No hay productos a reponer.</p>
+        </div>
+        <div
+          class="mt-3 col-span-12 justify-center text-center"
+          *ngIf="tieneProductosAReponer()"
+        >
+          <a
+            href="/admin/productos/listado-de-productos"
+            class="w-full text-blue-500 font-bold px-4 py-2 hover:bg-blue-50 rounded-lg"
+          >
+            Ver más
+          </a>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div
+    class="h-full flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden mt-4"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

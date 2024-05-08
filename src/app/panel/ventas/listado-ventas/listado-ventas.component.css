@@ -1,0 +1,20 @@
+/* Estilos para el contenedor de la tabla */
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+
+
+}
+
+/* Barra de desplazamiento horizontal */
+.table-container::-webkit-scrollbar-thumb {
+    height: 4px;
+    /* Ajusta este valor según tu preferencia */
+}
+
+@media screen and (max-width: 768px) {
+    .table-container {
+        overflow-x: scroll;
+        /* Cambiar a desplazamiento de deslizamiento para pantallas más pequeñas */
+    }
+}

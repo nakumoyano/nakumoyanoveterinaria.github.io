@@ -1,0 +1,235 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white" *ngIf="!isEdit">Nuevo proveedor</h3>
+        <h3 class="text-white" *ngIf="isEdit">Editar proveedor</h3>
+      </div>
+      <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+        <legend class="text-lg font-bold px-2 uppercase">
+          Datos del proveedor
+        </legend>
+
+        <form class="my-2" [formGroup]="frmAddEditProveedor">
+          <!-- id -->
+          <div class="flex-col gap-y-2 hidden">
+            <label class="block mb-2 text-sm font-medium text-white">Id</label>
+            <input
+              type="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              placeholder="Id"
+              formControlName="idProveedor"
+            />
+          </div>
+          <!-- NOMBRE/EMPRESA -->
+          <div
+            class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- NOMBRE -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="nombreCompleto"
+                >Nombre</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Nombre completo"
+                formControlName="nombreCompleto"
+                id="nombreCompleto"
+                [class.invalido]="
+                  controlNombreCompleto.touched && controlNombreCompleto.invalid
+                "
+                [ngClass]="
+                  controlNombreCompleto.touched && controlNombreCompleto.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="
+                  controlNombreCompleto.touched && controlNombreCompleto.invalid
+                "
+              >
+                El nombre del proveedor es requerido.
+              </small>
+            </div>
+            <!-- CUIT -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="cuit"
+                >CUIT</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="CUIT"
+                formControlName="cuit"
+                id="cuit"
+                [class.invalido]="controlCuit.touched && controlCuit.invalid"
+                [ngClass]="
+                  controlCuit.touched && controlCuit.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="
+                  controlCuit.invalid &&
+                  controlCuit.errors &&
+                  controlCuit.errors['formatoInvalido']
+                "
+              >
+                El CUIT debe mantener el formato 22-22222222-2.
+              </small>
+
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlCuit.touched && controlCuit.invalid"
+              >
+                El CUIT es requerido.
+              </small>
+            </div>
+
+            <!-- EMPRESA -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="nombreEmpresa"
+                >Empresa</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Nombre de la empresa"
+                id="nombreEmpresa"
+                formControlName="nombreEmpresa"
+                [class.invalido]="
+                  controlNombreEmpresa.touched &&
+                  controlNombreEmpresa.hasError('required')
+                "
+                [ngClass]="
+                  controlNombreEmpresa.touched && controlNombreEmpresa.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="
+                  controlNombreEmpresa.touched && controlNombreEmpresa.invalid
+                "
+              >
+                El nombre de la empresa es requerido.
+              </small>
+            </div>
+          </div>
+          <!-- DIRECCION/EMPRESA -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- TELEFONO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="telefono"
+                >Teléfono</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Teléfono"
+                id="telefono"
+                formControlName="telefono"
+                [class.invalido]="
+                  controlTelefono.touched &&
+                  controlTelefono.hasError('required')
+                "
+                [ngClass]="
+                  controlTelefono.touched && controlTelefono.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlTelefono.touched && controlTelefono.invalid"
+              >
+                El teléfono es requerido.
+              </small>
+            </div>
+            <!-- DIRECCION -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="direccion"
+                >Dirección</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Dirección"
+                id="direccion"
+                formControlName="direccion"
+                [class.invalido]="
+                  controlDireccion.touched &&
+                  controlDireccion.hasError('required')
+                "
+                [ngClass]="
+                  controlDireccion.touched && controlDireccion.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlDireccion.touched && controlDireccion.invalid"
+              >
+                La dirección es requerida.
+              </small>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="cargarProveedor()"
+            *ngIf="!isEdit"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar proveedor
+          </button>
+          <button
+            type="submit"
+            *ngIf="isEdit"
+            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="editarProveedor()"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar cambios
+          </button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

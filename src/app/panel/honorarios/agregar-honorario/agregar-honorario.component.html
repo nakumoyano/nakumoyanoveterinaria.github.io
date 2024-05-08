@@ -1,0 +1,127 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white" *ngIf="!isEdit">Nuevo honorario</h3>
+        <h3 class="text-white" *ngIf="isEdit">Editar honorario</h3>
+      </div>
+      <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+        <legend class="text-lg font-bold px-2 uppercase">
+          Datos del honorario
+        </legend>
+        <form class="my-2" [formGroup]="frmAddEditHonorario">
+          <!-- NOMBRE Y STOCK -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- id -->
+            <div class="flex-col gap-y-2 hidden">
+              <label class="block mb-2 text-sm font-medium text-white"
+                >Id</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Id"
+                formControlName="idHonorario"
+              />
+            </div>
+            <!-- HONORARIO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="nombreHonorario"
+                >Descripción honorario</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Descripción honorario"
+                formControlName="nombreHonorario"
+                id="nombreHonorario"
+                [class.invalido]="
+                  controlNombreHonorario.touched &&
+                  controlNombreHonorario.invalid
+                "
+                [ngClass]="
+                  controlNombreHonorario.touched &&
+                  controlNombreHonorario.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="
+                  controlNombreHonorario.touched &&
+                  controlNombreHonorario.invalid
+                "
+              >
+                La descripción del honorario es requerida.
+              </small>
+            </div>
+            <!-- GALENOS -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="galenos"
+                >Galenos</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Galenos"
+                formControlName="galenos"
+                id="galenos"
+                [class.invalido]="
+                  controlGaleno.touched && controlGaleno.invalid
+                "
+                [ngClass]="
+                  controlGaleno.touched && controlGaleno.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlGaleno.touched && controlGaleno.invalid"
+              >
+                La cantidad de galenos es requerida.
+              </small>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="cargarHonorario()"
+            *ngIf="!isEdit"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar honorario
+          </button>
+          <button
+            type="submit"
+            *ngIf="isEdit"
+            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="editarHonorario()"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar cambios
+          </button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

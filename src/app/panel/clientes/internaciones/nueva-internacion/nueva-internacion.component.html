@@ -1,0 +1,358 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white" *ngIf="!isEdit">Nueva Internación</h3>
+        <h3 class="text-white" *ngIf="isEdit">Editar Internación</h3>
+      </div>
+      <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+        <legend class="text-lg font-bold px-2 uppercase">
+          Datos de la internación
+        </legend>
+        <form class="my-2" [formGroup]="frmAddEditInternacion">
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- id -->
+            <div class="flex-col gap-y-2 hidden">
+              <label class="block mb-2 text-sm font-medium text-white"
+                >Id</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Id"
+                formControlName="idInternacion"
+              />
+            </div>
+            <!-- DUEÑO -->
+            <div class="flex flex-col">
+              <label
+                for="idPersona"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Persona</label
+              >
+              <p-dropdown
+                [options]="personas"
+                [(ngModel)]="selectedPersona"
+                (onChange)="cargarMascotasPorPersona($event.value)"
+                (onClear)="limpiarMascotas()"
+                optionLabel="nombreCompleto"
+                [filter]="true"
+                id="idPersona"
+                filterBy="nombreCompleto"
+                optionValue="idPersona"
+                [showClear]="true"
+                placeholder="Seleccionar persona"
+                formControlName="idPersona"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlPersonas.touched &&
+                  controlPersonas.hasError('required')
+                "
+                [ngClass]="
+                  controlPersonas.touched && controlPersonas.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-persona pTemplate="item">
+                  <div class="persona-item">
+                    <div>{{ persona.nombreCompleto }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlPersonas.touched && controlPersonas.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+            <!-- MASCOTA -->
+            <div class="flex flex-col">
+              <label
+                for="idMascota"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Mascota</label
+              >
+              <p-dropdown
+                [options]="mascotas"
+                [(ngModel)]="selectedMascota"
+                optionLabel="nombre"
+                [filter]="true"
+                id="idMascota"
+                filterBy="nombre"
+                optionValue="idMascota"
+                [showClear]="true"
+                placeholder="Seleccionar mascota"
+                formControlName="idMascota"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlMascota.touched && controlMascota.hasError('required')
+                "
+                [ngClass]="
+                  controlMascota.touched && controlMascota.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-mascota pTemplate="item">
+                  <div class="persona-item">
+                    <div>{{ mascota.nombre }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlMascota.touched && controlMascota.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+            <!-- FECHA INGRESO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="fechaIngreso"
+                >Fecha Ingreso</label
+              >
+              <input
+                type="date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="fechaIngreso"
+                id="fechaIngreso"
+                [class.invalido]="
+                  controlFechaIngreso.touched && controlFechaIngreso.invalid
+                "
+                [ngClass]="
+                  controlFechaIngreso.touched && controlFechaIngreso.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="
+                  controlFechaIngreso.touched && controlFechaIngreso.invalid
+                "
+              >
+                La fecha de ingreso es requerida.
+              </small>
+            </div>
+            <!-- FECHA EGRESO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="fechaEgreso"
+                >Fecha Egreso</label
+              >
+              <input
+                type="date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="fechaEgreso"
+                id="fechaEgreso"
+                [class.invalido]="
+                  controlFechaEgreso.touched && controlFechaEgreso.invalid
+                "
+                [ngClass]="
+                  controlFechaEgreso.touched && controlFechaEgreso.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlFechaEgreso.touched && controlFechaEgreso.invalid"
+              >
+                La fecha de egreso es requerida.
+              </small>
+            </div>
+          </div>
+
+          <div
+            class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- COSTO POR DIA -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="costoPorDia"
+                >Costo por día</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="costoPorDia"
+                id="costoPorDia"
+                placeholder="Ingrese el costo por dia"
+                [class.invalido]="
+                  controlCostoPorDia.touched && controlCostoPorDia.invalid
+                "
+                [ngClass]="
+                  controlCostoPorDia.touched && controlCostoPorDia.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlCostoPorDia.touched && controlCostoPorDia.invalid"
+              >
+                El costo por día es requerido.
+              </small>
+            </div>
+            <!-- COSTO TOTAL -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="costoTotal"
+                >Costo total</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="costoTotal"
+                id="costoTotal"
+                placeholder="Ingrese el costo total"
+                [class.invalido]="
+                  controlCostoTotal.touched && controlCostoTotal.invalid
+                "
+                [ngClass]="
+                  controlCostoTotal.touched && controlCostoTotal.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlCostoTotal.touched && controlCostoTotal.invalid"
+              >
+                El costo total es requerido.
+              </small>
+            </div>
+            <!-- SALDO PAGADO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="saldoPagado"
+                >Saldo pagado</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="saldoPagado"
+                id="saldoPagado"
+                placeholder="Ingrese el saldo pagado"
+                [class.invalido]="
+                  controlSalgoPagado.touched && controlSalgoPagado.invalid
+                "
+                [ngClass]="
+                  controlSalgoPagado.touched && controlSalgoPagado.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlSalgoPagado.touched && controlSalgoPagado.invalid"
+              >
+                El saldo pagado es requerido.
+              </small>
+            </div>
+            <!-- PAGADO -->
+            <div class="flex items-center">
+              <input
+                id="default-checkbox"
+                type="checkbox"
+                value=""
+                formControlName="pagado"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="default-checkbox"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >PAGADO</label
+              >
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              for="file_input"
+              >Subir PDF</label
+            >
+            <input
+              class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              id="file_input"
+              type="file"
+              formControlName="archivos"
+            />
+          </div>
+          <div class="mb-6">
+            <label
+              for="message"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Detalle</label
+            >
+            <textarea
+              id="message"
+              rows="4"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
+              placeholder="Detalles de la internación..."
+              formControlName="descripcion"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            *ngIf="!isEdit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="cargarInternacion()"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+            Guardar internación
+          </button>
+          <button
+            type="submit"
+            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            *ngIf="isEdit"
+            (click)="editarInternacion()"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar cambios
+          </button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

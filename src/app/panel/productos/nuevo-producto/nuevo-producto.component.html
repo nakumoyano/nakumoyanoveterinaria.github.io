@@ -1,0 +1,336 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white" *ngIf="!isEdit">Nuevo producto</h3>
+        <h3 class="text-white" *ngIf="isEdit">Editar producto</h3>
+      </div>
+      <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+        <legend class="text-lg font-bold px-2 uppercase">
+          Datos del producto
+        </legend>
+        <form class="my-2" [formGroup]="frmAddEditProducto">
+          <!-- NOMBRE , STOCK Y SOTCK MINIMO-->
+          <div
+            class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- id -->
+            <div class="flex-col gap-y-2 hidden">
+              <label class="block mb-2 text-sm font-medium text-white"
+                >Id</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Id"
+                formControlName="idProducto"
+              />
+            </div>
+            <!-- NOMBRE -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="nombre"
+                >Nombre</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Nombre del producto"
+                formControlName="nombre"
+                id="nombre"
+                [class.invalido]="
+                  controlNombre.touched && controlNombre.invalid
+                "
+                [ngClass]="
+                  controlNombre.touched && controlNombre.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlNombre.touched && controlNombre.invalid"
+              >
+                El nombre es requerido.
+              </small>
+            </div>
+            <!-- STOCK MINIMO-->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="stockMinimo"
+                >Stock Mínimo</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Stock mínimo"
+                formControlName="stockMinimo"
+                id="stockMinimo"
+                [class.invalido]="
+                  controlStockMinimo.touched && controlStockMinimo.invalid
+                "
+                [ngClass]="
+                  controlStockMinimo.touched && controlStockMinimo.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlStockMinimo.touched && controlStockMinimo.invalid"
+              >
+                El stock mínimo es requerido.
+              </small>
+            </div>
+            <!-- STOCK -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="stock"
+                >Stock</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Stock"
+                formControlName="stock"
+                id="stock"
+                [class.invalido]="controlStock.touched && controlStock.invalid"
+                [ngClass]="
+                  controlStock.touched && controlStock.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlStock.touched && controlStock.invalid"
+              >
+                El stock es requerido.
+              </small>
+            </div>
+          </div>
+          <!-- PRECIO Y CODIGO -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- PRECIO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="precio"
+                >Precio</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Precio del producto"
+                formControlName="precio"
+                id="precio"
+                [class.invalido]="
+                  controlPrecio.touched && controlPrecio.invalid
+                "
+                [ngClass]="
+                  controlPrecio.touched && controlPrecio.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlPrecio.touched && controlPrecio.invalid"
+              >
+                El precio es requerido.
+              </small>
+            </div>
+            <!-- CODIGO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="codigo"
+                >Código</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Código del producto"
+                formControlName="codigo"
+                id="codigo"
+                [class.invalido]="
+                  controlCodigo.touched && controlCodigo.invalid
+                "
+                [ngClass]="
+                  controlCodigo.touched && controlCodigo.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlCodigo.touched && controlCodigo.invalid"
+              >
+                El código es requerido.
+              </small>
+            </div>
+          </div>
+          <!-- CATEGORIAS Y MARCAS -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- CATEGORIAS -->
+            <div class="flex flex-col">
+              <label
+                for="idCategoria"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Categorías</label
+              >
+              <p-dropdown
+                [options]="categorias"
+                [(ngModel)]="selectedCategoria"
+                optionLabel="categoria"
+                [filter]="true"
+                id="idCategoria"
+                (onChange)="cargarMarcasPorCategoria($event.value)"
+                filterBy="categoria"
+                optionValue="idCategoria"
+                [showClear]="true"
+                placeholder="Seleccionar categoría"
+                formControlName="idCategoria"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlCategorias.touched &&
+                  controlCategorias.hasError('required')
+                "
+                [ngClass]="
+                  controlCategorias.touched && controlCategorias.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-categoria pTemplate="item">
+                  <div class="categoria-item">
+                    <div>{{ categoria.categoria }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlCategorias.touched && controlCategorias.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+
+            <!-- MARCAS -->
+            <div class="flex flex-col">
+              <label
+                for="idEmpresa"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Marcas</label
+              >
+              <p-dropdown
+                [options]="marcas"
+                [(ngModel)]="selectedMarca"
+                optionLabel="empresa"
+                [filter]="true"
+                filterBy="empresa"
+                appendTo="body"
+                [showClear]="true"
+                optionValue="idEmpresa"
+                placeholder="Seleccionar marca"
+                formControlName="idEmpresa"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlMarcas.touched && controlMarcas.hasError('required')
+                "
+                [ngClass]="
+                  controlMarcas.touched && controlMarcas.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-marca pTemplate="item">
+                  <div class="marca-item">
+                    <div>{{ marca.empresa }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlMarcas.touched && controlMarcas.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+          </div>
+          <!-- DESCRIPCION -->
+          <div class="mb-6">
+            <label
+              for="message"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Detalle</label
+            >
+            <textarea
+              id="message"
+              rows="4"
+              formControlName="descripcion"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
+              placeholder="Detalles del producto..."
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="cargarProducto()"
+            *ngIf="!isEdit"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar producto
+          </button>
+          <button
+            type="submit"
+            *ngIf="isEdit"
+            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="editarProducto()"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar cambios
+          </button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

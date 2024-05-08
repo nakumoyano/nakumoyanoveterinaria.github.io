@@ -1,0 +1,140 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white" *ngIf="!isEdit">Nueva raza</h3>
+        <h3 class="text-white" *ngIf="isEdit">Editar raza</h3>
+      </div>
+      <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+        <legend class="text-lg font-bold px-2 uppercase">
+          Datos de la raza
+        </legend>
+
+        <form class="my-2" [formGroup]="frmAddEditRaza">
+          <!-- id -->
+          <div class="flex-col gap-y-2 hidden">
+            <label class="block mb-2 text-sm font-medium text-white">Id</label>
+            <input
+              type="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              placeholder="Id"
+              formControlName="idRaza"
+            />
+          </div>
+          <!-- NOMBRE -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- Raza -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="raza"
+                >Raza</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Raza"
+                formControlName="raza"
+                id="raza"
+                [class.invalido]="controlRaza.touched && controlRaza.invalid"
+                [ngClass]="
+                  controlRaza.touched && controlRaza.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlRaza.touched && controlRaza.invalid"
+              >
+                La raza es requerida.
+              </small>
+            </div>
+            <!-- ESPECIE -->
+            <div class="flex flex-col">
+              <label
+                for="idEspecie"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Especie</label
+              >
+              <p-dropdown
+                [options]="especies"
+                [(ngModel)]="selectedEspecie"
+                optionLabel="especie"
+                id="idEspecie"
+                filterBy="especie"
+                optionValue="idEspecie"
+                [showClear]="true"
+                placeholder="Seleccionar especie"
+                formControlName="idEspecie"
+                appendTo="body"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlEspecies.touched &&
+                  controlEspecies.hasError('required')
+                "
+                [ngClass]="
+                  controlEspecies.touched && controlEspecies.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-especie pTemplate="item">
+                  <div class="especie-item">
+                    <div>{{ especie.especie }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlEspecies.touched && controlEspecies.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="cargarRaza()"
+            *ngIf="!isEdit"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar raza
+          </button>
+          <button
+            type="submit"
+            *ngIf="isEdit"
+            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="editarRaza()"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar cambios
+          </button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

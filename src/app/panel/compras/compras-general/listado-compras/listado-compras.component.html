@@ -1,0 +1,197 @@
+<div class="grid grid-cols-12 gap-4 mt-16">
+  <app-sidebar></app-sidebar>
+  <div class="lg:col-span-8 sm:col-span-12">
+    <div class="lg:ml-32 md:ml-56 mt-4 lg:mx-0 md:mx-0 sm:mx-2">
+      <div class="relative shadow-md sm:rounded-lg bg-white">
+        <div
+          class="grid lg:grid-cols-2 gap-2 sm:grid-cols-1 bg-gray-800 rounded-t-lg p-2 items-center"
+        >
+          <div class="flex flex-col">
+            <h2 class="text-white">Listado de Compras</h2>
+            <small class="text-slate-300">Total de compras (3)</small>
+          </div>
+          <label for="table-search" class="sr-only">Search</label>
+          <div class="relative items-end mx-auto">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="table-search-users"
+              class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Buscar compra"
+            />
+          </div>
+        </div>
+        <div class="table-container">
+          <table
+            class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Empleado</th>
+                <th scope="col" class="px-6 py-3">Tipo de pago</th>
+                <th scope="col" class="px-6 py-3">Proveedor</th>
+                <th scope="col" class="px-6 py-3">Estado de la compra</th>
+                <th scope="col" class="px-6 py-3">Fecha de compra</th>
+                <th scope="col" class="px-6 py-3">Importe total</th>
+                <th scope="col" class="px-6 py-3">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <th
+                  scope="row"
+                  class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  <div class="">
+                    <div class="text-base font-semibold">
+                      Nahuel <br />Moyano
+                    </div>
+                  </div>
+                </th>
+                <td class="px-6 py-4">Contado</td>
+                <td class="px-6 py-4">
+                  Nahuel <br />
+                  Moyano
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center">
+                    <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div>
+                    Cancelado
+                  </div>
+                </td>
+                <td class="px-6 py-4">2022-11-09</td>
+                <td class="px-6 py-4">$ 10000</td>
+                <td class="px-6 py-4">
+                  <div class="flex gap-x-4 text-xl">
+                    <i
+                      (click)="clickModalDelete()"
+                      class="fa-solid fa-trash text-red-600 hover:bg-red-100 p-2 rounded-lg hover:cursor-pointer"
+                    ></i>
+                    <i
+                      class="fa-solid fa-pen-to-square text-gray-600 hover:bg-gray-100 p-2 rounded-lg hover:cursor-pointer"
+                    ></i>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <th
+                  scope="row"
+                  class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  <div class="">
+                    <div class="text-base font-semibold">
+                      Nahuel <br />Moyano
+                    </div>
+                  </div>
+                </th>
+                <td class="px-6 py-4">Contado</td>
+                <td class="px-6 py-4">
+                  Nahuel <br />
+                  Moyano
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center">
+                    <div
+                      class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"
+                    ></div>
+                    Completado
+                  </div>
+                </td>
+                <td class="px-6 py-4">2022-11-09</td>
+                <td class="px-6 py-4">$ 10000</td>
+                <td class="px-6 py-4">
+                  <div class="flex gap-x-4 text-xl">
+                    <i
+                      (click)="clickModalDelete()"
+                      class="fa-solid fa-trash text-red-600 hover:bg-red-100 p-2 rounded-lg hover:cursor-pointer"
+                    ></i>
+                    <i
+                      class="fa-solid fa-pen-to-square text-gray-600 hover:bg-gray-100 p-2 rounded-lg hover:cursor-pointer"
+                    ></i>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <th
+                  scope="row"
+                  class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  <div class="">
+                    <div class="text-base font-semibold">
+                      Nahuel <br />Moyano
+                    </div>
+                  </div>
+                </th>
+                <td class="px-6 py-4">Contado</td>
+                <td class="px-6 py-4">
+                  Nahuel <br />
+                  Moyano
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center">
+                    <div
+                      class="h-2.5 w-2.5 rounded-full bg-yellow-500 mr-2"
+                    ></div>
+                    En proceso
+                  </div>
+                </td>
+                <td class="px-6 py-4">2022-11-09</td>
+                <td class="px-6 py-4">$ 10000</td>
+                <td class="px-6 py-4">
+                  <div class="flex gap-x-4 text-xl">
+                    <i
+                      (click)="clickModalDelete()"
+                      class="fa-solid fa-trash text-red-600 hover:bg-red-100 p-2 rounded-lg hover:cursor-pointer"
+                    ></i>
+                    <i
+                      class="fa-solid fa-pen-to-square text-gray-600 hover:bg-gray-100 p-2 rounded-lg hover:cursor-pointer"
+                    ></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        class="w-full flex items-center text-sm text-left text-black my-6 relative overflow-x-auto shadow-md sm:rounded-lg bg-white px-2 py-4"
+      >
+        <h4>
+          Total importe gastado:
+          <span class="text-gray-500 font-medium">$30000</span>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div
+    class="h-full flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden mt-4"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

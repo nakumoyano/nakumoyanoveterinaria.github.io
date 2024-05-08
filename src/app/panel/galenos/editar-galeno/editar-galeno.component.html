@@ -1,0 +1,117 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white" *ngIf="isEdit">Editar galeno</h3>
+      </div>
+      <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+        <legend class="text-lg font-bold px-2 uppercase">
+          Datos del galeno
+        </legend>
+
+        <form class="my-2" [formGroup]="frmAddEditGaleno">
+          <!-- id -->
+          <div class="flex-col gap-y-2 hidden">
+            <label class="block mb-2 text-sm font-medium text-white">Id</label>
+            <input
+              type="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              placeholder="Id"
+              formControlName="idGaleno"
+            />
+          </div>
+          <!-- GALENO/FECHA -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- galeno -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="precioGaleno"
+                >Precio del galeno</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Galeno"
+                formControlName="precioGaleno"
+                id="precioGaleno"
+                [class.invalido]="
+                  controlNombreGaleno.touched && controlNombreGaleno.invalid
+                "
+                [ngClass]="
+                  controlNombreGaleno.touched && controlNombreGaleno.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="
+                  controlNombreGaleno.touched && controlNombreGaleno.invalid
+                "
+              >
+                El galeno es requerido.
+              </small>
+            </div>
+            <!-- fecha actualziacion -->
+            <!-- <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="fechaActualizacion"
+                >Fecha de actualización</label
+              >
+              <input
+                type="date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="fechaActualizacion"
+                id="fechaActualizacion"
+                [class.invalido]="
+                  controlFechaActualizacion.touched &&
+                  controlFechaActualizacion.invalid
+                "
+                [ngClass]="
+                  controlFechaActualizacion.touched &&
+                  controlFechaActualizacion.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="
+                  controlFechaActualizacion.touched &&
+                  controlFechaActualizacion.invalid
+                "
+              >
+                La fecha de actualización es requerida.
+              </small>
+            </div> -->
+          </div>
+
+          <button
+            type="submit"
+            *ngIf="isEdit"
+            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="editarGaleno()"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar cambios
+          </button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

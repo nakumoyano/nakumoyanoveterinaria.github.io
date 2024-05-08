@@ -1,0 +1,138 @@
+<div class="grid grid-cols-12 gap-4 mt-16">
+  <app-sidebar></app-sidebar>
+  <div class="lg:col-span-8 sm:col-span-12">
+    <div class="lg:ml-32 md:ml-56 mt-4 lg:mx-0 md:mx-0 sm:mx-2">
+      <!-- toolbar -->
+      <div
+        class="p-2 mb-4 gap-2 rounded-lg shadow-md flex lg:justify-end md:justify-end sm:justify-between bg-white"
+        *ngFor="let m of mascotas"
+      >
+        <a href="/admin/mascotas/listado-de-mascotas">
+          <button
+            type="submit"
+            class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
+            <i class="fa-solid fa-arrow-left mr-1"></i>
+            Volver
+          </button>
+        </a>
+        <button
+          type="submit"
+          class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          [routerLink]="['/admin/mascotas/editar-mascota', m.idMascota]"
+          (click)="recargar()"
+          title="Editar"
+        >
+          <i class="fa-regular fa-floppy-disk mr-1"></i>
+          Editar
+        </button>
+      </div>
+      <div
+        class="relative shadow-md rounded-lg bg-white p-2 flex flex-col gap-2"
+      >
+        <!-- detalle mascota -->
+        <fieldset
+          class="border border-solid border-gray-300 p-2 m-2 rounded-lg"
+        >
+          <legend class="text-lg font-bold px-2 uppercase">
+            Detalle de la mascota
+          </legend>
+          <div class="my-2" *ngFor="let mascota of mascotas">
+            <div
+              class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-4 mb-6"
+            >
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Nombre</p>
+                <p>{{ mascota.nombre }}</p>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Peso</p>
+                <p>{{ mascota.peso }}kg.</p>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Nacimiento</p>
+                <p class="">
+                  {{ mascota.fechaNacimiento | date : "dd/mm/yyyy" }}
+                </p>
+              </div>
+            </div>
+            <div
+              class="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4 mb-6"
+            >
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Sexo</p>
+                <p>{{ mascota.sexo?.sexo }}</p>
+              </div>
+
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Raza</p>
+                <p>{{ mascota.raza?.raza }}</p>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Especie</p>
+                <p>{{ mascota.especie?.especie }}</p>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Castrado</p>
+                <p
+                  [style.color]="mascota.castrado ? 'green' : 'red'"
+                  class="font-bold"
+                >
+                  {{ mascota.castrado | booleanColor }}
+                </p>
+              </div>
+            </div>
+            <div class="mb-6">
+              <p class="font-bold uppercase">Antecendetes</p>
+              <p>
+                {{ mascota.antecedentes }}
+              </p>
+            </div>
+
+            <button
+              [routerLink]="[
+                '/admin/mascotas/detalle-historial-clinico',
+                mascota.idMascota
+              ]"
+              (click)="recargar()"
+              class="text-blue-600 font-bold px-4 py-2 hover:bg-blue-50 rounded-lg"
+            >
+              Ver historial clinico
+            </button>
+          </div>
+        </fieldset>
+        <!-- detalle dueño -->
+        <fieldset
+          class="border border-solid border-gray-300 p-2 m-2 rounded-lg"
+        >
+          <legend class="text-lg font-bold px-2 uppercase">
+            Detalle del dueño
+          </legend>
+          <div class="my-2" *ngFor="let mascota of mascotas">
+            <div
+              class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-4 mb-6"
+            >
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Nombre completo</p>
+                <p>{{ mascota.persona?.nombreCompleto }}</p>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Celular</p>
+                <p>{{ mascota.persona?.celular }}</p>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-bold uppercase">Domicilio</p>
+                <p class="">{{ mascota.persona?.domicilio }}</p>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div
+    class="h-full flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden mt-4"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

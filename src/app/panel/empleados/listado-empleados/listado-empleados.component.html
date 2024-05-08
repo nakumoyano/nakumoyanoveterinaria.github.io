@@ -1,0 +1,91 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[810px] w-[810px]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <div class="flex flex-col">
+          <h2 class="text-white">Listado de Empleados</h2>
+          <small class="text-slate-300">Total de empleados (1)</small>
+        </div>
+
+        <label for="table-search" class="sr-only">Search</label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="table-search-users"
+            class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Buscar empleado"
+          />
+        </div>
+      </div>
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-3">Nombre</th>
+            <th scope="col" class="px-6 py-3">Dirección</th>
+            <th scope="col" class="px-6 py-3">Documento</th>
+            <th scope="col" class="px-6 py-3">Rol</th>
+            <th scope="col" class="px-6 py-3">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+          >
+            <th
+              scope="row"
+              class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+            >
+              <div class="">
+                <div class="text-base font-semibold">Nahuel Moyano</div>
+                <div class="font-normal text-xs text-gray-500">3547467270</div>
+              </div>
+            </th>
+            <td class="px-6 py-4">Entre Ríos 171</td>
+            <td class="px-6 py-4">41485974</td>
+            <td class="px-6 py-4">Vendedor</td>
+            <td class="px-6 py-4">
+              <div class="flex gap-x-4 text-xl">
+                <i
+                  (click)="clickModalDelete()"
+                  class="fa-solid fa-trash text-red-600 hover:bg-red-100 p-2 rounded-lg hover:cursor-pointer"
+                ></i>
+                <i
+                  class="fa-solid fa-pen-to-square text-gray-600 hover:bg-gray-100 p-2 rounded-lg hover:cursor-pointer"
+                ></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

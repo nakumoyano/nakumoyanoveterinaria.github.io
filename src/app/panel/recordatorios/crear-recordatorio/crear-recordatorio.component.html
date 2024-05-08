@@ -1,0 +1,391 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white" *ngIf="!isEdit">Nuevo Recordatorio</h3>
+        <h3 class="text-white" *ngIf="isEdit">Editar Recordatorio</h3>
+      </div>
+      <form class="my-2" [formGroup]="frmAddEditRecordatorio">
+        <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+          <legend class="text-lg font-bold px-2 uppercase">
+            Datos del recordatorio
+          </legend>
+          <!-- REGISTRADO -->
+          <div class="flex items-start mb-6">
+            <div class="flex items-center h-5">
+              <input
+                id="terms"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                formControlName="registrado"
+              />
+            </div>
+            <label
+              for="terms"
+              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >REGISTRADO</label
+            >
+          </div>
+          <!-- DATOS FIJOS -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- id -->
+            <div class="flex-col gap-y-2 hidden">
+              <label class="block mb-2 text-sm font-medium text-white"
+                >Id</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Id"
+                formControlName="idRecordatorio"
+              />
+            </div>
+            <!-- DUEÑO -->
+            <div
+              class="flex flex-col"
+              *ngIf="frmAddEditRecordatorio.get('registrado')?.value"
+            >
+              <label
+                for="idPersona"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Persona</label
+              >
+              <p-dropdown
+                [options]="personas"
+                [(ngModel)]="selectedPersona"
+                (onChange)="cargarMascotasPorPersona($event.value)"
+                (onClear)="limpiarMascotas()"
+                optionLabel="nombreCompleto"
+                [filter]="true"
+                id="idPersona"
+                filterBy="nombreCompleto"
+                optionValue="idPersona"
+                [showClear]="true"
+                placeholder="Seleccionar persona"
+                formControlName="idPersona"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlPersonas.touched &&
+                  controlPersonas.hasError('required')
+                "
+                [ngClass]="
+                  controlPersonas.touched && controlPersonas.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-persona pTemplate="item">
+                  <div class="persona-item">
+                    <div>{{ persona.nombreCompleto }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlPersonas.touched && controlPersonas.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+            <!-- MASCOTA -->
+            <div
+              class="flex flex-col"
+              *ngIf="frmAddEditRecordatorio.get('registrado')?.value"
+            >
+              <label
+                for="idMascota"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Mascota</label
+              >
+              <p-dropdown
+                [options]="mascotas"
+                [(ngModel)]="selectedMascota"
+                optionLabel="nombre"
+                [filter]="true"
+                id="idMascota"
+                filterBy="nombre"
+                optionValue="idMascota"
+                [showClear]="true"
+                placeholder="Seleccionar mascota"
+                formControlName="idMascota"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlMascota.touched && controlMascota.hasError('required')
+                "
+                [ngClass]="
+                  controlMascota.touched && controlMascota.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-mascota pTemplate="item">
+                  <div class="persona-item">
+                    <div>{{ mascota.nombre }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlMascota.touched && controlMascota.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+            <!-- DIA -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="fecha"
+                >Fecha</label
+              >
+              <input
+                type="date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="fecha"
+                id="fecha"
+                [class.invalido]="controlFecha.touched && controlFecha.invalid"
+                [ngClass]="
+                  controlFecha.touched && controlFecha.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlFecha.touched && controlFecha.invalid"
+              >
+                La fecha es requerida.
+              </small>
+            </div>
+            <!-- PRECIO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="precio"
+                >Precio</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="precio"
+                id="precio"
+                placeholder="Ingrese el precio"
+                [class.invalido]="
+                  controlPrecio.touched && controlPrecio.invalid
+                "
+                [ngClass]="
+                  controlPrecio.touched && controlPrecio.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlPrecio.touched && controlPrecio.invalid"
+              >
+                El precio es requerido.
+              </small>
+            </div>
+            <!-- MOTIVO -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="motivo"
+                >Motivo</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="motivo"
+                id="motivo"
+                placeholder="Ingrese el motivo"
+                [class.invalido]="
+                  controlMotivo.touched && controlMotivo.invalid
+                "
+                [ngClass]="
+                  controlMotivo.touched && controlMotivo.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlMotivo.touched && controlMotivo.invalid"
+              >
+                El motivo es requerido.
+              </small>
+            </div>
+            <!-- PRODUCTO -->
+            <div class="flex flex-col">
+              <label
+                for="idProducto"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Producto</label
+              >
+              <p-dropdown
+                [options]="productos"
+                [(ngModel)]="selectedProducto"
+                optionLabel="nombre"
+                [filter]="true"
+                filterBy="nombre"
+                optionValue="idProducto"
+                appendTo="body"
+                [showClear]="true"
+                placeholder="Seleccionar producto"
+                formControlName="idProducto"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+              >
+                <ng-template let-prod pTemplate="item">
+                  <div class="prod-item">
+                    <div>{{ prod.nombre }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+            <!-- d************* NOMBRE MASCOTA Y DUEÑO *********** -->
+            <!-- NOMBRE COMPETO PERSONA -->
+            <div
+              class="flex flex-col"
+              *ngIf="!frmAddEditRecordatorio.get('registrado')?.value"
+            >
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="nombreCompletoPersona"
+                >Nombre completo de la persona</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="nombreCompletoPersona"
+                id="nombreCompletoPersona"
+                placeholder="Ingrese el nombre completo"
+              />
+            </div>
+            <!-- NOMBRE MASCOTA -->
+            <div
+              class="flex flex-col"
+              *ngIf="!frmAddEditRecordatorio.get('registrado')?.value"
+            >
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="nombreMascota"
+                >Nombre de la mascota</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="nombreMascota"
+                id="nombreMascota"
+                placeholder="Ingrese el nombre de la mascota"
+              />
+            </div>
+
+            <!-- TELEFONO -->
+            <div
+              class="flex flex-col"
+              *ngIf="!frmAddEditRecordatorio.get('registrado')?.value"
+            >
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="telefono"
+                >Teléfono</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="telefono"
+                id="telefono"
+                placeholder="Ingrese el teléfono"
+              />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 mb-6">
+            <!-- MENSAJE PREDETERMINADO -->
+            <div class="">
+              <label
+                for="message"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Mensaje predeterminado</label
+              >
+              <textarea
+                id="message"
+                rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
+                placeholder="Mensaje del recordatorio.."
+                formControlName="mensajePredeterminado"
+              ></textarea>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="cargarRecordatorio()"
+            *ngIf="!isEdit"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar recordatorio
+          </button>
+          <button
+            type="submit"
+            class="text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+            (click)="volverListado()"
+            *ngIf="isEdit"
+          >
+            <i class="fa-solid fa-arrow-left-long mr-1"></i>
+
+            Volver
+          </button>
+          <button
+            type="submit"
+            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            (click)="editarRecordatorio()"
+            *ngIf="isEdit"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar cambios
+          </button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

@@ -1,0 +1,258 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white" *ngIf="!isEdit">Nueva compra ha realizar</h3>
+        <h3 class="text-white" *ngIf="isEdit">Editar compra ha realizar</h3>
+      </div>
+      <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+        <legend class="text-lg font-bold px-2 uppercase">
+          Datos de la compra
+        </legend>
+
+        <form class="my-2" [formGroup]="frmAddEditCompraRealizar">
+          <!-- PRODUCTO REGISTRADO -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+          >
+            <!-- id -->
+            <div class="flex-col gap-y-2 hidden">
+              <label class="block mb-2 text-sm font-medium text-white"
+                >Id</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Id"
+                formControlName="idCompra"
+              />
+            </div>
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="terms"
+                  type="checkbox"
+                  formControlName="productoRegistrado"
+                  value=""
+                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                />
+              </div>
+              <label
+                for="terms"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Producto registrado</label
+              >
+            </div>
+          </div>
+          <!-- FECHA Y PRIORIDAD y PRODUCTO Y CANTIDAD -->
+          <div
+            class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-6"
+            *ngIf="
+              frmAddEditCompraRealizar.get('productoRegistrado')?.value;
+              else agregarProducto
+            "
+          >
+            <!-- PRODUCTO -->
+            <div class="flex flex-col">
+              <label
+                for="idProducto"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Producto</label
+              >
+              <p-dropdown
+                [options]="productos"
+                [(ngModel)]="selectedProducto"
+                optionLabel="nombre"
+                [filter]="true"
+                filterBy="nombre"
+                optionValue="idProducto"
+                appendTo="body"
+                [showClear]="true"
+                placeholder="Seleccionar producto"
+                formControlName="idProducto"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlProductos.touched &&
+                  controlProductos.hasError('required')
+                "
+                [ngClass]="
+                  controlProductos.touched && controlProductos.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-prod pTemplate="item">
+                  <div class="prod-item">
+                    <div>{{ prod.nombre }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlProductos.touched && controlProductos.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+            <!-- CANTIDAD -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="cantidad"
+                >Cantidad</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Cantidad del producto"
+                formControlName="cantidad"
+                id="cantidad"
+                [class.invalido]="
+                  controlCantidad.touched && controlCantidad.invalid
+                "
+                [ngClass]="
+                  controlCantidad.touched && controlCantidad.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlCantidad.touched && controlCantidad.invalid"
+              >
+                La cantidad es requerida.
+              </small>
+            </div>
+            <!-- FECHA -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="fecha"
+                >Fecha
+              </label>
+              <input
+                type="date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                formControlName="fecha"
+                id="fecha"
+                [class.invalido]="controlFecha.touched && controlFecha.invalid"
+                [ngClass]="
+                  controlFecha.touched && controlFecha.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlFecha.touched && controlFecha.invalid"
+              >
+                La fecha es requerida.
+              </small>
+            </div>
+            <!-- PRIORIDAD -->
+            <div class="flex flex-col">
+              <label
+                for="idPrioridad"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Prioridad</label
+              >
+              <p-dropdown
+                [options]="prioridades"
+                [(ngModel)]="selectedPrioridad"
+                optionLabel="prioridad"
+                id="idPrioridad"
+                optionValue="idPrioridad"
+                [showClear]="true"
+                placeholder="Seleccionar prioridad"
+                formControlName="idPrioridad"
+                appendTo="body"
+                [style]="{
+                  width: '100%',
+                  'background-color': '#F9FAFB',
+                  height: '37px',
+                  display: 'flex',
+                  'align-items': 'center',
+                  'border-radius': '8px'
+                }"
+                [class.invalido]="
+                  controlPrioridad.touched &&
+                  controlPrioridad.hasError('required')
+                "
+                [ngClass]="
+                  controlPrioridad.touched && controlPrioridad.invalid
+                    ? 'alert-dropdown-primeng  placeholder:text-sm '
+                    : ' text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block'
+                "
+              >
+                <ng-template let-prioridad pTemplate="item">
+                  <div class="prioridad-item">
+                    <div>{{ prioridad.prioridad }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlPrioridad.touched && controlPrioridad.invalid"
+              >
+                Elija una opción.
+              </small>
+            </div>
+            <div class="grid-cols-6">
+              <button
+                type="submit"
+                class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                (click)="cargarCompra()"
+                *ngIf="!isEdit"
+              >
+                <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+                Guardar compra a realizar
+              </button>
+              <button
+                type="submit"
+                class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                (click)="editarCompraRealizar()"
+                *ngIf="isEdit"
+              >
+                <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+                Guardar cambios
+              </button>
+            </div>
+          </div>
+
+          <ng-template #agregarProducto>
+            <button
+              type="submit"
+              class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              (click)="redireccionarAgregarProducto()"
+            >
+              <i class="fa-regular fa-plus mr-1"></i>
+
+              Agregar producto
+            </button>
+          </ng-template>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>

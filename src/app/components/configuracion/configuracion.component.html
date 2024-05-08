@@ -1,0 +1,187 @@
+<app-sidebar></app-sidebar>
+<div class="w-full h-full flex p-4 gap-x-4 mt-16">
+  <div class="lg:ml-56 md:ml-56 max-w-[125vh] w-[125vh]">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+      <div
+        class="flex items-center justify-between bg-gray-800 rounded-t-lg p-2"
+      >
+        <h3 class="text-white">CONFIGURACIÓN</h3>
+      </div>
+      <div
+        class="flex flex-col gap-4 bg-blue-100 my-6 p-4 border-l-4 border-l-blue-400 text-sm"
+      >
+        <p>
+          A continuación usted podrá cambiar sus datos. Siga los siguientes
+          pasos para proteger su cuenta y realizar cambios tanto en su perfil
+          como en su contraseña actual.
+        </p>
+        <p>
+          <strong>Nota:</strong> Si cambia la contraseña, finalizará la sesión
+          actual.
+        </p>
+      </div>
+      <!-- DATOS DE LA PERSONA-->
+      <form class="my-2" [formGroup]="frmEditPerfil">
+        <!-- DATOS -->
+        <fieldset class="border border-solid border-gray-300 p-3 mt-2">
+          <legend class="text-lg font-bold px-2 uppercase">
+            Datos personales
+          </legend>
+          <!-- id -->
+          <div class="flex-col gap-y-2 hidden">
+            <label class="block mb-2 text-sm font-medium text-white">Id</label>
+            <input
+              type="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              placeholder="Id"
+              formControlName="idPersona"
+            />
+          </div>
+          <!-- NOMBRE ,EMAIL  -->
+          <div class="grid grid-cols-1 gap-4 mb-6">
+            <!-- id -->
+            <div class="flex-col gap-y-2 hidden">
+              <label class="block mb-2 text-sm font-medium text-white"
+                >Id</label
+              >
+              <input
+                type="number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Id"
+                formControlName="idPersona"
+              />
+            </div>
+            <!-- NOMBRE -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="nombre"
+                >Nombre completo</label
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Nombre completo"
+                formControlName="nombre"
+                id="nombre"
+                [class.invalido]="
+                  controlNombre.touched && controlNombre.invalid
+                "
+                [ngClass]="
+                  controlNombre.touched && controlNombre.invalid
+                    ? 'alert placeholder:text-sm '
+                    : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                "
+              />
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlNombre.touched && controlNombre.invalid"
+              >
+                El nombre es requerido.
+              </small>
+            </div>
+            <!-- Email -->
+            <div class="flex flex-col">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="email"
+                >Email</label
+              >
+              <div class="relative">
+                <input
+                  type="number"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="Email"
+                  formControlName="email"
+                  id="email"
+                  [class.invalido]="
+                    controlEmail.touched && controlEmail.invalid
+                  "
+                  [ngClass]="
+                    controlEmail.touched && controlEmail.invalid
+                      ? 'alert placeholder:text-sm '
+                      : 'border px-3 py-2 rounded-lg focus:outline-none text-black placeholder:text-sm'
+                  "
+                />
+              </div>
+              <small
+                class="alert-panel alert-danger"
+                role="alert"
+                *ngIf="controlEmail.touched && controlEmail.invalid"
+              >
+                El email es requerido.
+              </small>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Guardar cambios
+          </button>
+        </fieldset>
+
+        <!-- CONTRASEÑA -->
+        <fieldset class="border border-solid border-gray-300 p-3 mt-6">
+          <legend class="text-lg font-bold px-2 uppercase">
+            Cambiar contraseña
+          </legend>
+          <div class="flex flex-col">
+            <label
+              for=""
+              class="block uppercase tracking-wide border-solid text-gray-700 text-xs font-bold mb-2"
+              >Contraseña</label
+            >
+            <input
+              [type]="changetype ? 'password' : 'text'"
+              class="shadow appearance-none block w-full bg-transparent text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none border-gray-400"
+              formControlName="password"
+              [class.invalido]="
+                controlPassword.touched && controlPassword.hasError('required')
+              "
+            />
+            <button
+              class="absolute py-3 px-4 translate-x-[600px] translate-y-[25px]"
+            >
+              <span class="i-eye" (click)="mostrarPassword()"
+                ><i
+                  [ngClass]="
+                    visible
+                      ? 'fa-solid fa-eye text-black'
+                      : 'fa-solid fa-eye-slash'
+                  "
+                  id="eye"
+                ></i
+              ></span>
+            </button>
+            <small
+              class="alert-panel alert-danger"
+              role="alert"
+              *ngIf="controlPassword.touched && controlPassword.invalid"
+            >
+              La contraseña es requerida
+            </small>
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <i class="fa-regular fa-floppy-disk mr-1"></i>
+
+            Actualizar contraseña
+          </button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div
+    class="h-full w-[300px] flex flex-col gap-y-4 rounded-lg lg:block md:hidden sm:hidden"
+  >
+    <app-panel-right></app-panel-right>
+  </div>
+</div>
