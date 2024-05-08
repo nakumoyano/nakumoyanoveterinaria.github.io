@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Galeno } from 'src/app/models/galeno/galeno';
-import { GalenosService } from 'src/app/services/galenos/galenos.service';
+import { GalenosHonorariosService } from 'src/app/services/galenos/galenos-honorarios.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -25,7 +25,7 @@ export class EditarGalenoComponent implements OnInit {
   private subscription = new Subscription();
 
   constructor(
-    private galenosService: GalenosService,
+    private galenosHonorariosService: GalenosHonorariosService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -64,7 +64,7 @@ export class EditarGalenoComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this.subscription.add(
-            this.galenosService.updateData(body).subscribe({
+            this.galenosHonorariosService.updateData(body).subscribe({
               next: (response: any) => {
                 Swal.fire(
                   '¡Editado!',
@@ -106,7 +106,7 @@ export class EditarGalenoComponent implements OnInit {
       const id = params['id'];
       if (id) {
         this.isEdit = true;
-        this.galenosService.getDataById(id).subscribe(
+        this.galenosHonorariosService.getDataById(id).subscribe(
           (marca: any) => {
             this.frmAddEditGaleno.patchValue(marca.resultado);
           },

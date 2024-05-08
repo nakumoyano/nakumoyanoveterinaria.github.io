@@ -9,8 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Honorario } from 'src/app/models/honorario/honorario';
-import { GalenosService } from 'src/app/services/galenos/galenos.service';
-import { HonorariosService } from 'src/app/services/honorarios/honorarios.service';
+import { GalenosHonorariosService } from 'src/app/services/galenos/galenos-honorarios.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -28,7 +27,7 @@ export class AgregarHonorarioComponent implements OnInit {
   private subscription = new Subscription();
 
   constructor(
-    private honorariosService: HonorariosService,
+    private galenosHonorariosService: GalenosHonorariosService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -55,8 +54,8 @@ export class AgregarHonorarioComponent implements OnInit {
       this.frmAddEditHonorario.value;
 
     if (this.frmAddEditHonorario.valid) {
-      this.honorariosService
-        .addData(idHonorario, nombreHonorario, galenos)
+      this.galenosHonorariosService
+        .addDataHonorario(idHonorario, nombreHonorario, galenos)
         .subscribe({
           next: () => {
             console.log(this.frmAddEditHonorario.value);
@@ -95,7 +94,7 @@ export class AgregarHonorarioComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this.subscription.add(
-            this.honorariosService.updateData(body).subscribe({
+            this.galenosHonorariosService.updateDataHonorario(body).subscribe({
               next: (response: any) => {
                 Swal.fire(
                   '¡Editado!',
@@ -136,7 +135,7 @@ export class AgregarHonorarioComponent implements OnInit {
       const id = params['id'];
       if (id) {
         this.isEdit = true;
-        this.honorariosService.getDataById(id).subscribe(
+        this.galenosHonorariosService.getDataByIdHonorario(id).subscribe(
           (honorario: any) => {
             this.frmAddEditHonorario.patchValue(honorario.resultado);
           },

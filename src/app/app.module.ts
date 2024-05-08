@@ -50,7 +50,6 @@ import { ListadoGalenoComponent } from './panel/galenos/listado-galeno/listado-g
 import { EditarGalenoComponent } from './panel/galenos/editar-galeno/editar-galeno.component';
 
 import { CambioDeColorPipe } from './pipes/cambioDeColor/cambio-de-color.pipe';
-import { EliminarHonorarioComponent } from './panel/honorarios/eliminar-honorario/eliminar-honorario.component';
 import { ListadoPersonasComponent } from './panel/personas/listado-personas/listado-personas.component';
 import { EditarPersonaComponent } from './panel/personas/editar-persona/editar-persona.component';
 import { BooleanColorPipe } from './pipes/booleanColor/boolean-color.pipe';
@@ -109,7 +108,6 @@ import { EliminarElementoComponent } from './components/eliminar-elemento/elimin
     EditarGalenoComponent,
 
     CambioDeColorPipe,
-    EliminarHonorarioComponent,
     ListadoPersonasComponent,
     EditarPersonaComponent,
 

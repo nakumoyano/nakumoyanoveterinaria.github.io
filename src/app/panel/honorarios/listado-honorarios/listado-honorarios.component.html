@@ -94,10 +94,10 @@
                         title="Editar"
                       ></i>
                     </button>
-                    <app-eliminar-honorario
-                      [honorario]="honorario"
-                      (onEliminado)="getHonorariosData()"
-                    ></app-eliminar-honorario>
+                    <app-eliminar-elemento
+                      [elemento]="honorario"
+                      (eliminado)="eliminar($event)"
+                    ></app-eliminar-elemento>
                   </div>
                 </td>
               </tr>

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Galeno } from 'src/app/models/galeno/galeno';
 import { Honorario } from 'src/app/models/honorario/honorario';
-import { GalenosService } from 'src/app/services/galenos/galenos.service';
-import { HonorariosService } from 'src/app/services/honorarios/honorarios.service';
+import { GalenosHonorariosService } from 'src/app/services/galenos/galenos-honorarios.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,8 +15,8 @@ export class ListadoHonorariosComponent implements OnInit {
   galeno: Galeno; // Declara this.galeno como una propiedad
 
   constructor(
-    private galenosService: GalenosService,
-    private honorariosService: HonorariosService
+    private galenosHonorariosService: GalenosHonorariosService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -25,7 +25,7 @@ export class ListadoHonorariosComponent implements OnInit {
   }
 
   getHonorariosData() {
-    this.honorariosService.getAllData().subscribe(
+    this.galenosHonorariosService.getAllDataHonorario().subscribe(
       (data: any) => {
         this.honorarios = data.resultado;
         console.log(this.honorarios);
@@ -38,7 +38,7 @@ export class ListadoHonorariosComponent implements OnInit {
 
   getGalenoData() {
     const idDelGaleno = 1;
-    this.galenosService.getDataById(idDelGaleno).subscribe(
+    this.galenosHonorariosService.getDataById(idDelGaleno).subscribe(
       (response: any) => {
         this.galeno = response.resultado;
         console.log(this.galeno);
@@ -47,6 +47,24 @@ export class ListadoHonorariosComponent implements OnInit {
         console.error('Error al obtener el Galeno', error);
       }
     );
+  }
+
+  // FUNCION PARA ELIMINAR
+  eliminar(producto: any) {
+    this.galenosHonorariosService.deleteDataHonorario(producto).subscribe({
+      next: (response: any) => {
+        if (response.statusCode === 204) {
+          this.toastr.success('¡El honorario se ha eliminado correctamente!');
+          this.getHonorariosData();
+        } else {
+        }
+      },
+      error: (error: any) => {
+        this.toastr.error(
+          'Ha ocurrido un error al intentar eliminar el honorario.'
+        );
+      },
+    });
   }
 
   calcularPrecioPesoGaleno(honorario: any): number {
